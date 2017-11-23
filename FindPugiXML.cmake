@@ -9,3 +9,4 @@ find_package_handle_standard_args(pugixml DEFAULT_MSG
   PugiXML_LIBRARIES
   PugiXML_INCLUDE_DIRS)
 message(STATUS "PugiXML include DIRS: " ${PugiXML_INCLUDE_DIRS} ", PugiXML library: " ${PugiXML_LIBRARIES})
+
