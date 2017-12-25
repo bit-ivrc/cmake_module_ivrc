@@ -141,14 +141,14 @@ function(PROTOBUF_GENERATE_CPP SRCS HDRS)
     get_filename_component(ABS_FIL ${FIL} ABSOLUTE)
     get_filename_component(FIL_WE ${FIL} NAME_WE)
 
-    list(APPEND ${SRCS} "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}.pb.cc")
-    list(APPEND ${HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}.pb.h")
+    list(APPEND ${SRCS} "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/${FIL_WE}.pb.cc")
+    list(APPEND ${HDRS} "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/${FIL_WE}.pb.h")
 
     add_custom_command(
       OUTPUT "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/${FIL_WE}.pb.cc"
              "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/${FIL_WE}.pb.h"
       COMMAND  ${PROTOBUF_PROTOC_EXECUTABLE}
-      ARGS --cpp_out  ${CMAKE_CURRENT_BINARY_DIR} ${_protobuf_include_path} ${ABS_FIL}
+      ARGS --cpp_out  ${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/ ${_protobuf_include_path} ${ABS_FIL}
       DEPENDS ${ABS_FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
       COMMENT "Running C++ protocol buffer compiler on ${FIL}"
       VERBATIM )
@@ -194,9 +194,9 @@ function(PROTOBUF_GENERATE_PYTHON SRCS)
     get_filename_component(ABS_FIL ${FIL} ABSOLUTE)
     get_filename_component(FIL_WE ${FIL} NAME_WE)
 
-    list(APPEND ${SRCS} "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}_pb2.py")
+    list(APPEND ${SRCS} "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/${FIL_WE}_pb2.py")
     add_custom_command(
-      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}_pb2.py"
+      OUTPUT "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}/proto/${FIL_WE}_pb2.py"
       COMMAND  ${PROTOBUF_PROTOC_EXECUTABLE} --python_out ${CMAKE_CURRENT_BINARY_DIR} ${_protobuf_include_path} ${ABS_FIL}
       DEPENDS ${ABS_FIL} ${PROTOBUF_PROTOC_EXECUTABLE}
       COMMENT "Running Python protocol buffer compiler on ${FIL}"
@@ -303,8 +303,7 @@ find_program(PROTOBUF_PROTOC_EXECUTABLE
 )
 mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
 
-
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Protobuf DEFAULT_MSG
     PROTOBUF_LIBRARY PROTOBUF_INCLUDE_DIR)
 
